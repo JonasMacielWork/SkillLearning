@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(aws ec2 describe-instances:*)",
+      "Bash(aws rds describe-db-instances:*)",
+      "Bash(aws:*)"
+    ],
+    "deny": []
+  }
+}

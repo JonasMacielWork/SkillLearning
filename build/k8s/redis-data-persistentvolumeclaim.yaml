@@ -1,9 +1,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  labels:
-    io.kompose.service: zookeeper-log
-  name: zookeeper-log
+  name: redis-data
 spec:
   accessModes:
     - ReadWriteOnce

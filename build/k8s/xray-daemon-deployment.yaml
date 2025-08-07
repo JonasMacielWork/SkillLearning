@@ -2,6 +2,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: xray-daemon
+  labels:
+    app: xray-daemon
 spec:
   replicas: 1
   selector:
@@ -20,7 +22,7 @@ spec:
               protocol: UDP
           env:
             - name: AWS_REGION
-              value: AWS_REGION
+              value: "us-east-1"
             - name: AWS_ACCESS_KEY_ID
               valueFrom:
                 secretKeyRef:
