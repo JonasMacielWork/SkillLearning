@@ -1,6 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk.Worker">
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
+    <RuntimeIdentifiers>linux-x64</RuntimeIdentifiers>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>dotnet-SkillLearning.Workers.EmailSender-05923a31-15dc-486a-8d20-8a07ceaa5ca8</UserSecretsId>

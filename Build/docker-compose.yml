@@ -1,15 +1,17 @@
+version: '3.8'
+
 services:
   skilllearning-api:
     container_name: skilllearning-api
     build:
-      context: ..
-      dockerfile: build/Dockerfile
+      context: ../
+      dockerfile: Build/Dockerfile
     ports:
       - "5000:8080"
     environment:
       ASPNETCORE_ENVIRONMENT: Development
-      ConnectionStrings__Default: ${POSTGRES_CONNECTION_STRING}
-      ConnectionStrings__ReadOnly: ${POSTGRES_CONNECTION_STRING}
+      ConnectionStrings__Default: "Host=postgres-primary;Port=5432;Database=${POSTGRES_DB};Username=${POSTGRES_USERNAME};Password=${POSTGRES_PASSWORD}"
+      ConnectionStrings__ReadOnly: "Host=postgres-primary;Port=5432;Database=${POSTGRES_DB};Username=${POSTGRES_USERNAME};Password=${POSTGRES_PASSWORD}"
       Redis__ConnectionString: redis:6379
       Kafka__BootstrapServers: kafka:29092
       Jwt__Key: ${JWT_KEY}
@@ -29,8 +31,8 @@ services:
   skilllearning-workers-emailsender:
     container_name: skilllearning-workers-emailsender
     build:
-      context: ..
-      dockerfile: build/Dockerfile.Workers.EmailSender
+      context: ../
+      dockerfile: Build/Dockerfile.Workers.EmailSender
     environment:
       Kafka__BootstrapServers: kafka:29092
       EmailSettings__SmtpServer: smtp.gmail.com
