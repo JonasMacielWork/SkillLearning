@@ -1,0 +1,49 @@
+# Copy this file to terraform.tfvars and fill in your values
+# DO NOT commit terraform.tfvars to version control
+# 
+# ⚠️ FREE TIER CONFIGURATION ⚠️
+# This configuration is optimized for AWS Free Tier to avoid charges
+
+# Basic Configuration
+environment = "dev"
+project_name = "skilllearning"
+owner = "DevTeam"
+
+# AWS Configuration  
+aws_region = "us-east-1"
+# availability_zones = []  # Will use first AZ automatically
+
+# Instance Configuration (FREE TIER)
+instance_type = "t2.micro"  # FREE: 750 hours/month for 12 months
+key_pair_name = "skilllearning-keypair"
+public_key_path = "~/.ssh/id_rsa.pub"
+
+# Database Configuration (FREE TIER)
+db_instance_class = "db.t3.micro"  # FREE: 750 hours/month for 12 months
+db_username = "postgres"
+db_password = "your-secure-password-here"  
+
+# Security Configuration
+allowed_ssh_cidrs = ["your.ip.address.here/32"]  # Replace with your IP
+
+# Infrastructure Options (FREE TIER OPTIMIZED)
+enable_nat_gateway = false      # ⚠️ NAT Gateway costs ~$45/month - DISABLED
+enable_multi_az = false         # ⚠️ Multi-AZ costs extra - DISABLED
+backup_retention_days = 0       # ⚠️ Backup storage may cost - DISABLED
+
+# Hybrid Architecture Options
+enable_load_balancer = false    # ⚠️ ALB costs ~$20/month - DISABLED for Free Tier
+enable_elasticache = true       # ✅ ElastiCache cache.t2.micro is FREE (750h/month)
+
+# 🏗️ HYBRID ARCHITECTURE EXPLANATION:
+# Terraform provisions: VPC + EC2 + RDS + ElastiCache (AWS managed)
+# Docker Compose runs: API + Workers (only on EC2)
+# Result: Best of both worlds - managed AWS services + simple container orchestration
+
+# Free Tier Limits Reference:
+# - EC2: 750 hours/month t2.micro (12 months)
+# - RDS: 750 hours/month db.t3.micro (12 months) 
+# - ElastiCache: 750 hours/month cache.t2.micro (12 months)
+# - EBS: 30GB General Purpose (12 months)
+# - Data Transfer: 1GB/month outbound
+# - Load Balancer: NOT FREE (~$20/month) - disabled by default

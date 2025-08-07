@@ -72,6 +72,7 @@ app.UseRateLimiter();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapHub<ActivityHub>("/hubs/activity");
+app.MapGet("/health", () => Results.Ok(new { Status = "Healthy" }));
 app.MapControllers().RequireRateLimiting("fixed");
 
 await app.RunAsync();

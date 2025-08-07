@@ -1,9 +1,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  labels:
-    io.kompose.service: pgdata
-  name: pgdata
+  name: kafka-data
 spec:
   accessModes:
     - ReadWriteOnce

@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis-insight
+  labels:
+    app: redis-insight
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: redis-insight
+  template:
+    metadata:
+      labels:
+        app: redis-insight
+    spec:
+      containers:
+        - image: redis/redisinsight:latest
+          name: redis-insight
+          ports:
+            - containerPort: 5540
+      restartPolicy: Always
