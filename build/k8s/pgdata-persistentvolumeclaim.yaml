@@ -1,9 +1,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  labels:
-    io.kompose.service: redis-data
-  name: redis-data
+  name: pgdata
 spec:
   accessModes:
     - ReadWriteOnce

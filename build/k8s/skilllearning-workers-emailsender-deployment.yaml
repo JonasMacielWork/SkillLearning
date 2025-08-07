@@ -2,6 +2,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: skilllearning-workers-emailsender
+  labels:
+    app: skilllearning-workers-emailsender
 spec:
   replicas: 1
   selector:
@@ -15,13 +17,12 @@ spec:
       containers:
         - name: skilllearning-workers-emailsender
           image: skilllearning-workers-emailsender
+          imagePullPolicy: IfNotPresent
           env:
             - name: Kafka__BootstrapServers
-              value: kafka:29092
+              value: "kafka:9092"
             - name: EmailSettings__SmtpServer
-              value: smtp.gmail.com
-            - name: EmailSettings__SenderName
-              value: SkillLearning
+              value: "smtp.gmail.com"
             - name: EmailSettings__SmtpPort
               value: "587"
             - name: EmailSettings__SmtpUsername

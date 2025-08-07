@@ -37,6 +37,11 @@ spec:
                 secretKeyRef:
                   name: skilllearning-secrets
                   key: POSTGRES_PASSWORD
+          readinessProbe:
+            exec:
+              command: ["pg_isready", "-U", "$(POSTGRES_USER)", "-d", "$(POSTGRES_DB)"]
+            initialDelaySeconds: 10
+            periodSeconds: 5
           volumeMounts:
             - mountPath: /var/lib/postgresql/data
               name: pgdata
