@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import LoginForm from "@/components/auth/LoginForm";
 import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/button.tsx";
 
 const LoginPage: React.FC = () => {
   useEffect(() => {

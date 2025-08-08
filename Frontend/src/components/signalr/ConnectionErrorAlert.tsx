@@ -1,7 +1,7 @@
 import React from 'react';
 import { AlertTriangle, RefreshCcw } from 'lucide-react';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components/ui/button.tsx';
 
 // Exibe erros de conexão e oferece ação de tentar novamente.
 export function ConnectionErrorAlert({ message, onRetry }: { message: string; onRetry: () => void }) {
