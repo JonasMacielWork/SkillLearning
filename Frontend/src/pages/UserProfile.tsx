@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useAuth } from "@/context/AuthContext";
 import { Card } from "@/components/ui/card";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button.tsx";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { toast } from "@/components/ui/use-toast";
 import { Link } from "react-router-dom";
@@ -123,7 +123,7 @@ const UserProfile: React.FC = () => {
             <h3 className="font-semibold mb-3">Atalhos</h3>
             <ul className="space-y-2 text-sm">
               <li><Link to="/" className="story-link">Página inicial</Link></li>
-              <li><a href="https://github.com/JonasMacielWork/SkillLearning.git" target="_blank" rel="noreferrer" className="story-link">Repositório no GitHub</a></li>
+              <li><a href="https://github.com/JonasMacielWork/SkillLearning.git" target="_blank" rel="noopener noreferrer" className="story-link">Repositório no GitHub</a></li>
             </ul>
           </Card>
         </section>

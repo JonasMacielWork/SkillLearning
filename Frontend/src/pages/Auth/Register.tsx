@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import RegisterForm from "@/components/auth/RegisterForm";
 import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button.tsx";
+import { Button } from "@/components/ui/button";
 
 const RegisterPage: React.FC = () => {
   useEffect(() => {

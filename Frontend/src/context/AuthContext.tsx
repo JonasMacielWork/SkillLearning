@@ -1,6 +1,6 @@
 // Contexto de Autenticação (JWT): centraliza login/registro/logout, persiste tokens e hidrata o usuário; expõe useAuth para rotas protegidas.
 import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
-import { clearTokens, getTokens, isExpired, login as apiLogin, register as apiRegister, setTokens } from "@/lib/auth";
+import { clearTokens, getTokens, isExpired, login as apiLogin, register as apiRegister, setTokens, parseJwt } from "@/lib/auth";
 import { toast } from "@/components/ui/use-toast";
 
 export type AuthUser = { id?: string; email?: string; name?: string; username?: string; role?: number } | null;
@@ -24,12 +24,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     // Hydrate tokens and naive user from token payload if present
     const tokens = getTokens();
     if (tokens?.accessToken && !isExpired(tokens.accessToken, 5)) {
-      try {
-        const payload = JSON.parse(atob(tokens.accessToken.split(".")[1]));
+        const payload = parseJwt(tokens.accessToken) || {};
         setUser({ id: payload.sub, email: payload.email, name: payload.name, username: (payload as any).username ?? payload.name });
-      } catch {
-        setUser(null);
-      }
     }
     setLoading(false);
   }, []);
@@ -37,7 +33,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const handleLogin = useCallback(async (username: string, password: string) => {
     const data: any = await apiLogin({ username, password });
     if (data.accessToken && data.refreshToken) setTokens({ accessToken: data.accessToken, refreshToken: data.refreshToken });
-    const payload = data.accessToken ? JSON.parse(atob(data.accessToken.split(".")[1])) : {};
+    const payload = data.accessToken ? (parseJwt(data.accessToken) || {}) : {};
     setUser({
       id: data.id ?? payload.sub,
       email: data.email ?? payload.email,
@@ -68,7 +64,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     // Alguns backends já retornam tokens no registro; se sim, persiste
     if ((data as any).accessToken && (data as any).refreshToken) {
       setTokens({ accessToken: (data as any).accessToken, refreshToken: (data as any).refreshToken });
-      const payload = JSON.parse(atob((data as any).accessToken.split(".")[1]));
+      const payload = parseJwt((data as any).accessToken) || {};
       setUser({ id: payload.sub, email: payload.email ?? email, name: payload.name ?? payload.username ?? username });
     }
     toast({ title: "Conta criada!", description: "Cadastro realizado com sucesso." });

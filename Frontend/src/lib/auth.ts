@@ -43,7 +43,7 @@ function parseProblemDetails(text: string, fallbackStatusText?: string): { messa
 
 const ACCESS_KEY = "auth.accessToken";
 const REFRESH_KEY = "auth.refreshToken";
-
+let memoryTokens: Tokens | null = null;
 export const AuthEndpoints = {
   login: "/api/Auth/login",
   register: "/api/Auth/register",
@@ -51,23 +51,27 @@ export const AuthEndpoints = {
 };
 
 export function getTokens(): Tokens | null {
-  const accessToken = localStorage.getItem(ACCESS_KEY) || "";
-  const refreshToken = localStorage.getItem(REFRESH_KEY) || "";
+  if (memoryTokens) return memoryTokens;
+  const accessToken = sessionStorage.getItem(ACCESS_KEY) || "";
+  const refreshToken = sessionStorage.getItem(REFRESH_KEY) || "";
   if (!accessToken || !refreshToken) return null;
-  return { accessToken, refreshToken };
+  memoryTokens = { accessToken, refreshToken };
+  return memoryTokens;
 }
 
 export function setTokens(t: Tokens) {
-  localStorage.setItem(ACCESS_KEY, t.accessToken);
-  localStorage.setItem(REFRESH_KEY, t.refreshToken);
+  memoryTokens = t;
+  sessionStorage.setItem(ACCESS_KEY, t.accessToken);
+  sessionStorage.setItem(REFRESH_KEY, t.refreshToken);
 }
 
 export function clearTokens() {
-  localStorage.removeItem(ACCESS_KEY);
-  localStorage.removeItem(REFRESH_KEY);
+  memoryTokens = null;
+  sessionStorage.removeItem(ACCESS_KEY);
+  sessionStorage.removeItem(REFRESH_KEY);
 }
 
-function parseJwt(token: string): any | null {
+export function parseJwt(token: string): any | null {
   try {
     const payload = token.split(".")[1];
     const json = atob(payload.replace(/-/g, "+").replace(/_/g, "/"));
