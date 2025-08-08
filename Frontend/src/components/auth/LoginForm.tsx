@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button.tsx";
+import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { AlertCircle } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
@@ -23,12 +23,15 @@ const LoginForm: React.FC = () => {
       await login(username, password);
       navigate("/");
     } catch (err: any) {
-      const problem = err?.problem as { title?: string; detail?: string; errors?: Record<string, string[]> } | undefined;
+      const problem = err?.problem as { title?: string; detail?: string; errors?: Record<string, string[]>; status?: number } | undefined;
       const details = problem?.errors
         ? Object.entries(problem.errors)
             .flatMap(([field, msgs]) => (Array.isArray(msgs) ? msgs.map((m) => `${field}: ${m}`) : []))
         : undefined;
-      const message = [problem?.title || err?.message || "Erro no login", problem?.detail].filter(Boolean).join(" — ");
+      const isServer = typeof problem?.status === "number" && problem.status >= 500;
+      const message = isServer
+        ? "Erro no servidor. Tente novamente mais tarde."
+        : [problem?.title || err?.message || "Erro no login", problem?.detail].filter(Boolean).join(" — ");
       setServerError({ message, details });
     } finally {
       setLoading(false);

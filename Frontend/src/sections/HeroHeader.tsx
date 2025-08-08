@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button.tsx";
+import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Zap, Github } from "lucide-react";
 import { Link } from "react-router-dom";

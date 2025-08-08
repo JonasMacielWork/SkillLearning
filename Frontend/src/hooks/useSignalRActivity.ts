@@ -20,14 +20,17 @@ export function useSignalRActivity(options: Options) {
   }, [options]);
 
   useEffect(() => {
-    const searchOverride = (() => {
-      try {
-        const p = new URLSearchParams(window.location.search);
-        return p.get("hub") || undefined;
-      } catch {
-        return undefined;
-      }
-    })();
+    const isDev = import.meta.env.MODE === "development";
+    const searchOverride = isDev
+      ? (() => {
+          try {
+            const p = new URLSearchParams(window.location.search);
+            return p.get("hub") || undefined;
+          } catch {
+            return undefined;
+          }
+        })()
+      : undefined;
 
     const hubUrl = options.url || searchOverride || "/hubs/activity";
 
