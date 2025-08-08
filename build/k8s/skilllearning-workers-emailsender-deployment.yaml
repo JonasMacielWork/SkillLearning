@@ -20,7 +20,7 @@ spec:
           imagePullPolicy: IfNotPresent
           env:
             - name: Kafka__BootstrapServers
-              value: "kafka:9092"
+              value: "kafka:29092"
             - name: EmailSettings__SmtpServer
               value: "smtp.gmail.com"
             - name: EmailSettings__SmtpPort
