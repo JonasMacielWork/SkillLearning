@@ -12,6 +12,7 @@ COPY ["Backend/SkillLearning.Application/SkillLearning.Application.csproj", "Bac
 COPY ["Backend/SkillLearning.Domain/SkillLearning.Domain.csproj", "Backend/SkillLearning.Domain/"]
 COPY ["Backend/SkillLearning.Infrastructure/SkillLearning.Infrastructure.csproj", "Backend/SkillLearning.Infrastructure/"]
 COPY ["Backend/SkillLearning.Workers.EmailSender/SkillLearning.Workers.EmailSender.csproj", "Backend/SkillLearning.Workers.EmailSender/"]
+COPY ["Backend/SkillLearning.Tests/SkillLearning.Tests.csproj", "Backend/SkillLearning.Tests/"]
 
 RUN dotnet restore "SkillLearning.sln"
 
