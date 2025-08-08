@@ -1,11 +1,11 @@
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { useHealth } from "@/hooks/useHealth";
+import { useSaude } from "@/hooks/useSaude";
 import { toast } from "@/components/ui/use-toast";
 import { RefreshCw, HeartPulse } from "lucide-react";
 
-const HealthStatus = () => {
-  const { data, isLoading, isError, refetch, isFetching } = useHealth();
+const EstadoSaude = () => {
+  const { data, isLoading, isError, refetch, isFetching } = useSaude();
 
   if (isError) {
     toast({
@@ -19,7 +19,7 @@ const HealthStatus = () => {
 
   return (
     <section aria-labelledby="api-health-heading" className="mb-8">
-      <h2 id="api-health-heading" className="sr-only">API Health</h2>
+      <h2 id="api-health-heading" className="sr-only">Saúde da API</h2>
       <Card className="glass-card p-4 border-glass-border/50">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
@@ -41,4 +41,4 @@ const HealthStatus = () => {
   );
 };
 
-export default HealthStatus;
+export default EstadoSaude;

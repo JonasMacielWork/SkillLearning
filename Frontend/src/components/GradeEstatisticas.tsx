@@ -2,21 +2,21 @@ import React from 'react';
 import { Users, Activity, Zap, Timer } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 
-interface StatsGridProps {
-  stats: {
-    users: number;
-    activities: number;
-    uptime: string;
-    responseTime: string;
+interface PropriedadesGradeEstatisticas {
+  estatisticas: {
+    usuarios: number;
+    atividades: number;
+    tempoAtivo: string;
+    tempoResposta: string;
   };
 }
 
-const StatsGrid: React.FC<StatsGridProps> = ({ stats }) => {
+const GradeEstatisticas: React.FC<PropriedadesGradeEstatisticas> = ({ estatisticas }) => {
   const statsData = [
     {
       icon: <Users className="w-6 h-6" />,
       label: 'Usuários Ativos',
-      value: stats.users.toLocaleString(),
+      value: estatisticas.usuarios.toLocaleString(),
       change: '+12%',
       color: 'primary',
       gradient: 'gradient-primary'
@@ -24,7 +24,7 @@ const StatsGrid: React.FC<StatsGridProps> = ({ stats }) => {
     {
       icon: <Activity className="w-6 h-6" />,
       label: 'Atividades',
-      value: stats.activities.toLocaleString(),
+      value: estatisticas.atividades.toLocaleString(),
       change: '+8%',
       color: 'secondary',
       gradient: 'gradient-secondary'
@@ -32,7 +32,7 @@ const StatsGrid: React.FC<StatsGridProps> = ({ stats }) => {
     {
       icon: <Zap className="w-6 h-6" />,
       label: 'Uptime',
-      value: stats.uptime,
+      value: estatisticas.tempoAtivo,
       change: 'Estável',
       color: 'accent',
       gradient: 'gradient-primary'
@@ -40,7 +40,7 @@ const StatsGrid: React.FC<StatsGridProps> = ({ stats }) => {
     {
       icon: <Timer className="w-6 h-6" />,
       label: 'Resp. Time',
-      value: stats.responseTime,
+      value: estatisticas.tempoResposta,
       change: '-15%',
       color: 'primary',
       gradient: 'gradient-secondary'
@@ -72,4 +72,4 @@ const StatsGrid: React.FC<StatsGridProps> = ({ stats }) => {
   );
 };
 
-export default StatsGrid;
+export default GradeEstatisticas;

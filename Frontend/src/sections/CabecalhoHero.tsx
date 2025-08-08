@@ -2,11 +2,11 @@ import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Zap, Github } from "lucide-react";
 import { Link } from "react-router-dom";
-import { useAuth } from "@/context/AuthContext";
+import { useAutenticacao } from "@/context/ContextoAutenticacao";
 
-const HeroHeader = () => {
-  const { isAuthenticated, user, logout } = useAuth();
-  const displayName = user?.username || user?.name || user?.email || "";
+const CabecalhoHero: React.FC = () => {
+  const { autenticado, usuario, sair } = useAutenticacao();
+  const nomeExibicao = usuario?.username || usuario?.name || usuario?.email || "";
 
   return (
     <header className="text-center mb-16 animate-fade-in">
@@ -23,22 +23,22 @@ const HeroHeader = () => {
       </p>
 
       <div className="flex flex-col items-center gap-3">
-        {isAuthenticated ? (
+        {autenticado ? (
           <div className="relative w-full max-w-2xl mx-auto overflow-hidden rounded-2xl bg-gradient-primary p-5 animate-scale-in">
             <div className="flex items-center gap-4">
               <div className="relative">
                 <Avatar className="h-12 w-12 ring-2 ring-white/40">
-                  <AvatarFallback>{(displayName || user?.email || 'U').charAt(0).toUpperCase()}</AvatarFallback>
+                  <AvatarFallback>{(nomeExibicao || usuario?.email || 'U').charAt(0).toUpperCase()}</AvatarFallback>
                 </Avatar>
                 <span className="absolute -bottom-1 -right-1 h-3 w-3 rounded-full bg-accent ring-2 ring-white/80"></span>
               </div>
               <div className="text-left text-white">
                 <p className="text-sm/none opacity-80">Bem-vindo de volta</p>
-                <p className="text-xl font-semibold">{displayName || user?.email}</p>
+                <p className="text-xl font-semibold">{nomeExibicao || usuario?.email}</p>
                 <div className="mt-1 flex items-center gap-2">
-                  {user?.email && <span className="text-xs/none opacity-80">{user.email}</span>}
-                  {user?.role !== undefined && (
-                    <span className="text-[10px] px-2 py-0.5 rounded-md bg-white/20">Permissão: {user.role}</span>
+                  {usuario?.email && <span className="text-xs/none opacity-80">{usuario.email}</span>}
+                  {usuario?.role !== undefined && (
+                    <span className="text-[10px] px-2 py-0.5 rounded-md bg-white/20">Permissão: {usuario.role}</span>
                   )}
                 </div>
               </div>
@@ -47,7 +47,7 @@ const HeroHeader = () => {
                   <Link to="/me">Meu perfil</Link>
                 </Button>
                 <Button asChild size="sm" className="glass-button">
-                  <a href="#" onClick={(e) => { e.preventDefault(); logout(); }}>Sair</a>
+                  <a href="#" onClick={(e) => { e.preventDefault(); sair(); }}>Sair</a>
                 </Button>
               </div>
             </div>
@@ -77,4 +77,4 @@ const HeroHeader = () => {
   );
 };
 
-export default HeroHeader;
+export default CabecalhoHero;

@@ -1,10 +1,10 @@
 import { apiGet } from '@/lib/api';
-import type { ActivityEvent, ActivityType } from '@/types/activity';
+import type { EventoAtividade, TipoAtividade } from '@/types/atividade';
 
 // DTO vindo do backend (timestamps como string ISO)
-export interface ActivityDTO {
+export interface AtividadeDTO {
   id: string;
-  type: ActivityType;
+  type: TipoAtividade;
   user: string;
   message?: string;
   timestamp: string; // ISO 8601
@@ -12,12 +12,12 @@ export interface ActivityDTO {
 
 // Busca atividades desde um timestamp ISO (catch-up pós-conexão/login)
 // Se o endpoint não existir ainda no backend, a função falha silenciosamente e retorna [].
-export async function fetchActivitiesSince(sinceIso?: string): Promise<ActivityEvent[]> {
+export async function buscarAtividadesDesde(sinceIso?: string): Promise<EventoAtividade[]> {
   const query = sinceIso ? `?since=${encodeURIComponent(sinceIso)}` : '';
   try {
-    const data = await apiGet<ActivityDTO[]>(`/api/activity${query}`);
+    const data = await apiGet<AtividadeDTO[]>(`/api/activity${query}`);
     if (!Array.isArray(data)) return [];
-    return (data as ActivityDTO[]).map(dto => ({
+    return (data as AtividadeDTO[]).map(dto => ({
       id: dto.id,
       type: dto.type,
       user: dto.user,

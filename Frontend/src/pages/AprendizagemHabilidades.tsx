@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import SignalRDemo from '@/components/SignalRDemo';
-import ActivityFeed from '@/components/ActivityFeed';
-import StatsGrid from '@/components/StatsGrid';
-import HealthStatus from '@/components/HealthStatus';
-import ConnectionStatusCard from '@/sections/ConnectionStatusCard';
-import HeroHeader from '@/sections/HeroHeader';
-import FeaturesGrid from '@/sections/FeaturesGrid';
-import TechStackGrid from '@/sections/TechStackGrid';
-import ArchitectureSection from '@/sections/ArchitectureSection';
+import DemoSignalR from '@/components/DemoSignalR';
+import FeedAtividades from '@/components/FeedAtividades';
+import GradeEstatisticas from '@/components/GradeEstatisticas';
+import EstadoSaude from '@/components/EstadoSaude';
+import CartaoStatusConexao from '@/sections/CartaoStatusConexao';
+import CabecalhoHero from '@/sections/CabecalhoHero';
+import GradeRecursos from '@/sections/GradeRecursos';
+import GradeTecnologias from '@/sections/GradeTecnologias';
+import SecaoArquitetura from '@/sections/SecaoArquitetura';
 import { features } from '@/data/features';
 import { techStack } from '@/data/techStack';
 
@@ -21,11 +21,11 @@ const SkillLearning = () => {
   const [isConnected, setIsConnected] = useState(false);
 
   // Estatísticas fictícias para Cards (demonstra UI e estado)
-  const [stats, setStats] = useState({
-    users: 1247,
-    activities: 3847,
-    uptime: '99.9%',
-    responseTime: '45ms'
+  const [estatisticas, setEstatisticas] = useState({
+    usuarios: 1247,
+    atividades: 3847,
+    tempoAtivo: '99.9%',
+    tempoResposta: '45ms'
   });
 
   // SEO básico da página
@@ -39,15 +39,42 @@ const SkillLearning = () => {
       document.head.appendChild(meta);
     }
     meta.content = 'Exemplos simples: autenticação JWT, SignalR em tempo real, UI com Tailwind/shadcn.';
+
+    // Canonical link
+    let link = document.querySelector('link[rel="canonical"]') as HTMLLinkElement | null;
+    if (!link) {
+      link = document.createElement('link');
+      link.rel = 'canonical';
+      document.head.appendChild(link);
+    }
+    link.href = window.location.href;
+
+    // JSON-LD simples para Website
+    const ldId = 'ld-json-website';
+    let ld = document.getElementById(ldId) as HTMLScriptElement | null;
+    const ldData = {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      name: "SkillLearning",
+      url: window.location.origin,
+      inLanguage: "pt-BR"
+    } as const;
+    if (!ld) {
+      ld = document.createElement('script');
+      ld.type = 'application/ld+json';
+      ld.id = ldId;
+      document.head.appendChild(ld);
+    }
+    ld.text = JSON.stringify(ldData);
   }, []);
 
   // Atualiza stats de forma periódica (mock) para mostrar mudança visual
   useEffect(() => {
     const interval = setInterval(() => {
-      setStats(prev => ({
+      setEstatisticas(prev => ({
         ...prev,
-        users: prev.users + Math.floor(Math.random() * 3),
-        activities: prev.activities + Math.floor(Math.random() * 5),
+        usuarios: prev.usuarios + Math.floor(Math.random() * 3),
+        atividades: prev.atividades + Math.floor(Math.random() * 5),
       }));
     }, 5000);
     return () => clearInterval(interval);
@@ -62,19 +89,19 @@ const SkillLearning = () => {
       
       <div className="relative z-10 container mx-auto px-6 py-8">
         {/* Cabeçalho com CTAs e info do usuário se logado */}
-        <HeroHeader />
+        <CabecalhoHero />
 
         {/* Saúde da API (GET simples) */}
-        <HealthStatus />
+        <EstadoSaude />
 
         {/* Cards de estatísticas (mock) */}
-        <StatsGrid stats={stats} />
+        <GradeEstatisticas estatisticas={estatisticas} />
 
         {/* Grid principal */}
         <div className="grid lg:grid-cols-3 gap-8 mb-16">
           {/* Demo do SignalR (tempo real) */}
           <div className="lg:col-span-2">
-            <SignalRDemo 
+            <DemoSignalR 
               isConnected={isConnected}
               onConnectionChange={setIsConnected}
             />
@@ -82,17 +109,17 @@ const SkillLearning = () => {
 
           {/* Feed simulado (apenas UI) */}
           <div className="lg:col-span-1">
-            <ActivityFeed />
+            <FeedAtividades />
           </div>
         </div>
 
         {/* Seções de referência/conteúdo estático para estudo */}
-        <FeaturesGrid features={features} />
-        <TechStackGrid techStack={techStack} />
-        <ArchitectureSection />
+        <GradeRecursos features={features} />
+        <GradeTecnologias techStack={techStack} />
+        <SecaoArquitetura />
 
         {/* Status resumido da conexão (rodapé) */}
-        <ConnectionStatusCard isConnected={isConnected} />
+        <CartaoStatusConexao isConnected={isConnected} />
       </div>
     </div>
   );

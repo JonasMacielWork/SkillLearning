@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import RegisterForm from "@/components/auth/RegisterForm";
+import RegisterForm from "@/components/auth/FormularioRegistro";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 

@@ -2,7 +2,7 @@
 import { useEffect, useRef } from "react";
 import { HubConnectionBuilder, LogLevel } from "@microsoft/signalr";
 
-interface Options {
+interface Opcoes {
   onConnectedChange?: (connected: boolean) => void;
   onUserLoggedIn?: (username: string) => void;
   onNewUserRegistered?: (username: string) => void;
@@ -13,7 +13,7 @@ interface Options {
 
 // Centraliza a conexão com o Hub de atividades
 // Conecta em /hubs/activity por padrão (Vite proxy lida com o alvo https://localhost:7140 em dev)
-export function useSignalRActivity(options: Options) {
+export function useAtividadesSignalR(options: Opcoes) {
   const optsRef = useRef(options);
   useEffect(() => {
     optsRef.current = options;

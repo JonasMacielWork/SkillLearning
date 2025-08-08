@@ -1,9 +1,9 @@
 // Tipos relacionados a atividades em tempo real do demo de SignalR
-export type ActivityType = 'user_joined' | 'user_login' | 'message_sent';
+export type TipoAtividade = 'user_joined' | 'user_login' | 'message_sent';
 
-export interface ActivityEvent {
+export interface EventoAtividade {
   id: string;
-  type: ActivityType;
+  type: TipoAtividade;
   user: string;
   message?: string;
   timestamp: Date;
