@@ -1,5 +1,5 @@
 import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/button.tsx";
 import { useHealth } from "@/hooks/useHealth";
 import { toast } from "@/components/ui/use-toast";
 import { RefreshCw, HeartPulse } from "lucide-react";
