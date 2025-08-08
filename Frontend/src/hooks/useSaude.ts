@@ -1,12 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
-import { apiGet } from "@/lib/api";
+import { apiGet as apiObter } from "@/lib/api";
 
-export type HealthData = {
+export type DadosSaude = {
   healthy: boolean;
   statusText: string;
 };
 
-function normalizeHealth(raw: unknown | string): HealthData {
+function normalizarSaude(raw: unknown | string): DadosSaude {
   // ASP.NET HealthChecks can return plain text or JSON depending on configuration
   try {
     if (typeof raw === "string") {
@@ -22,13 +22,13 @@ function normalizeHealth(raw: unknown | string): HealthData {
   return { healthy: false, statusText: "Unknown" };
 }
 
-export function useHealth() {
+export function useSaude() {
   return useQuery({
-    queryKey: ["health"],
+    queryKey: ["saude"],
     queryFn: async () => {
       // Try JSON first, fallback handled in apiGet
-      const result = await apiGet("/health", undefined, "text");
-      return normalizeHealth(result);
+      const result = await apiObter("/health", undefined, "text");
+      return normalizarSaude(result);
     },
     refetchInterval: 15000,
     staleTime: 10000,

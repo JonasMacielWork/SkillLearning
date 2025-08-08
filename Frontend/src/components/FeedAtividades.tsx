@@ -3,7 +3,7 @@ import { Activity, User, LogIn, MessageSquare, TrendingUp } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 
-interface ActivityItem {
+interface ItemAtividade {
   id: string;
   type: 'login' | 'registration' | 'api_call' | 'error' | 'performance';
   title: string;
@@ -12,8 +12,8 @@ interface ActivityItem {
   severity: 'info' | 'success' | 'warning' | 'error';
 }
 
-const ActivityFeed: React.FC = () => {
-  const [activities, setActivities] = useState<ActivityItem[]>([
+const FeedAtividades: React.FC = () => {
+  const [atividades, setAtividades] = useState<ItemAtividade[]>([
     {
       id: '1',
       type: 'login',
@@ -54,7 +54,7 @@ const ActivityFeed: React.FC = () => {
         {
           type: 'login' as const,
           title: 'Novo Login',
-          description: `Usuario ${generateRandomEmail()} autenticado`,
+          description: `Usuario ${gerarEmailAleatorio()} autenticado`,
           severity: 'success' as const
         },
         {
@@ -72,32 +72,32 @@ const ActivityFeed: React.FC = () => {
         {
           type: 'registration' as const,
           title: 'Novo Usuário',
-          description: `Conta criada para ${generateRandomEmail()}`,
+          description: `Conta criada para ${gerarEmailAleatorio()}`,
           severity: 'info' as const
         }
       ];
 
       const randomActivity = newActivities[Math.floor(Math.random() * newActivities.length)];
-      const newItem: ActivityItem = {
+      const novoItem: ItemAtividade = {
         id: Date.now().toString(),
         ...randomActivity,
         timestamp: new Date()
       };
 
-      setActivities(prev => [newItem, ...prev.slice(0, 9)]);
+      setAtividades(prev => [novoItem, ...prev.slice(0, 9)]);
     }, 7000);
 
     return () => clearInterval(interval);
   }, []);
 
-  const generateRandomEmail = () => {
+  const gerarEmailAleatorio = () => {
     const names = ['ana', 'pedro', 'julia', 'carlos', 'lucia', 'rafael'];
     const domains = ['example.com', 'test.com', 'demo.com'];
     return `${names[Math.floor(Math.random() * names.length)]}@${domains[Math.floor(Math.random() * domains.length)]}`;
   };
 
-  const getIcon = (type: ActivityItem['type']) => {
-    switch (type) {
+  const obterIcone = (tipo: ItemAtividade['type']) => {
+    switch (tipo) {
       case 'login':
         return <LogIn className="w-4 h-4" />;
       case 'registration':
@@ -111,8 +111,8 @@ const ActivityFeed: React.FC = () => {
     }
   };
 
-  const getSeverityColor = (severity: ActivityItem['severity']) => {
-    switch (severity) {
+  const obterClasseSeveridade = (severidade: ItemAtividade['severity']) => {
+    switch (severidade) {
       case 'success':
         return 'bg-accent text-accent-foreground';
       case 'info':
@@ -124,15 +124,15 @@ const ActivityFeed: React.FC = () => {
     }
   };
 
-  const formatTimeAgo = (date: Date) => {
-    const now = new Date();
-    const diff = now.getTime() - date.getTime();
-    const minutes = Math.floor(diff / 60000);
+  const formatarTempoAtras = (data: Date) => {
+    const agora = new Date();
+    const diff = agora.getTime() - data.getTime();
+    const minutos = Math.floor(diff / 60000);
     
-    if (minutes < 1) return 'agora';
-    if (minutes < 60) return `${minutes}min`;
-    if (minutes < 1440) return `${Math.floor(minutes / 60)}h`;
-    return `${Math.floor(minutes / 1440)}d`;
+    if (minutos < 1) return 'agora';
+    if (minutos < 60) return `${minutos}min`;
+    if (minutos < 1440) return `${Math.floor(minutos / 60)}h`;
+    return `${Math.floor(minutos / 1440)}d`;
   };
 
   return (
@@ -148,27 +148,27 @@ const ActivityFeed: React.FC = () => {
       </div>
 
       <div className="space-y-3 max-h-96 overflow-y-auto">
-        {activities.map((activity, index) => (
+        {atividades.map((atividade, indice) => (
           <div 
-            key={activity.id}
+            key={atividade.id}
             className="group p-4 rounded-lg bg-muted/10 hover:bg-muted/20 transition-all duration-300 border border-transparent hover:border-glass-border/30 animate-fade-in"
-            style={{ animationDelay: `${index * 0.1}s` }}
+            style={{ animationDelay: `${indice * 0.1}s` }}
           >
             <div className="flex items-start gap-3">
-              <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${getSeverityColor(activity.severity)}`}>
-                {getIcon(activity.type)}
+              <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${obterClasseSeveridade(atividade.severity)}`}>
+                {obterIcone(atividade.type)}
               </div>
               
               <div className="flex-1 min-w-0">
                 <div className="flex items-center justify-between mb-1">
-                  <h4 className="font-medium text-sm">{activity.title}</h4>
+                  <h4 className="font-medium text-sm">{atividade.title}</h4>
                   <span className="text-xs text-muted-foreground">
-                    {formatTimeAgo(activity.timestamp)}
+                    {formatarTempoAtras(atividade.timestamp)}
                   </span>
                 </div>
                 
                 <p className="text-xs text-muted-foreground leading-relaxed">
-                  {activity.description}
+                  {atividade.description}
                 </p>
               </div>
             </div>
@@ -189,4 +189,4 @@ const ActivityFeed: React.FC = () => {
   );
 };
 
-export default ActivityFeed;
+export default FeedAtividades;

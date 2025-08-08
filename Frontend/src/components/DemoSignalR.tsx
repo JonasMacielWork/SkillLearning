@@ -2,23 +2,23 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Card } from '@/components/ui/card';
 import { toast } from '@/components/ui/use-toast';
-import { useSignalRActivity } from '@/hooks/useSignalRActivity';
-import { useActivityLog } from '@/hooks/useActivityLog';
-import { ActivityList } from '@/components/signalr/ActivityList';
-import { MessageInput } from '@/components/signalr/MessageInput';
-import { ConnectionHeader } from '@/components/signalr/ConnectionHeader';
-import { ConnectionErrorAlert } from '@/components/signalr/ConnectionErrorAlert';
-import { fetchActivitiesSince } from '@/lib/activityApi';
+import { useAtividadesSignalR } from '@/hooks/useAtividadesSignalR';
+import { useRegistroAtividades } from '@/hooks/useRegistroAtividades';
+import { ActivityList as ListaAtividades } from '@/components/signalr/ListaAtividades';
+import { MessageInput as EntradaMensagem } from '@/components/signalr/EntradaMensagem';
+import { ConnectionHeader as CabecalhoConexao } from '@/components/signalr/CabecalhoConexao';
+import { ConnectionErrorAlert as AlertaErroConexao } from '@/components/signalr/AlertaErroConexao';
+import { buscarAtividadesDesde } from '@/lib/atividadeApi';
 
-interface SignalRDemoProps {
+interface PropsDemoSignalR {
   isConnected: boolean;
   onConnectionChange: (connected: boolean) => void;
 }
 
 // Tipos de atividades foram movidos para src/types/activity.ts
 
-const SignalRDemo: React.FC<SignalRDemoProps> = ({ isConnected, onConnectionChange }) => {
-  const { activities, addActivity, addActivities, getLastTimestamp, formatTime } = useActivityLog();
+const DemoSignalR: React.FC<PropsDemoSignalR> = ({ isConnected, onConnectionChange }) => {
+  const { activities, addActivity, addActivities, getLastTimestamp, formatTime } = useRegistroAtividades();
   const [message, setMessage] = useState('');
   const [username, setUsername] = useState('Você');
   const [connectError, setConnectError] = useState<string | null>(null);
@@ -29,7 +29,7 @@ const SignalRDemo: React.FC<SignalRDemoProps> = ({ isConnected, onConnectionChan
       unmountingRef.current = true;
     };
   }, []);
-  useSignalRActivity({
+  useAtividadesSignalR({
     depsKey,
     onConnectedChange: (connected) => {
       onConnectionChange(connected);
@@ -59,7 +59,7 @@ const SignalRDemo: React.FC<SignalRDemoProps> = ({ isConnected, onConnectionChan
     let cancelled = false;
     (async () => {
       const sinceIso = getLastTimestamp()?.toISOString();
-      const events = await fetchActivitiesSince(sinceIso);
+      const events = await buscarAtividadesDesde(sinceIso);
       if (!cancelled && events.length) addActivities(events);
     })();
     return () => { cancelled = true; };
@@ -78,11 +78,11 @@ const SignalRDemo: React.FC<SignalRDemoProps> = ({ isConnected, onConnectionChan
 
   return (
     <Card className="glass-card p-6 h-full">
-      <ConnectionHeader isConnected={isConnected} />
+      <CabecalhoConexao isConnected={isConnected} />
 
       {/* Connection Error */}
       {connectError && (
-        <ConnectionErrorAlert message={connectError} onRetry={() => setDepsKey((k) => k + 1)} />
+        <AlertaErroConexao message={connectError} onRetry={() => setDepsKey((k) => k + 1)} />
       )}
 
       {/* Activities List */}
@@ -92,11 +92,11 @@ const SignalRDemo: React.FC<SignalRDemoProps> = ({ isConnected, onConnectionChan
           Atividades em Tempo Real
         </h4>
         
-        <ActivityList activities={activities} formatTime={formatTime} />
+        <ListaAtividades activities={activities} formatTime={formatTime} />
       </div>
 
       {/* Message Input */}
-      <MessageInput
+      <EntradaMensagem
         username={username}
         setUsername={setUsername}
         message={message}
@@ -114,4 +114,4 @@ const SignalRDemo: React.FC<SignalRDemoProps> = ({ isConnected, onConnectionChan
   );
 };
 
-export default SignalRDemo;
+export default DemoSignalR;

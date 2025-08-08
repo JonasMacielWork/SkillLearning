@@ -1,11 +1,11 @@
 import React from 'react';
-import type { ActivityEvent } from '@/types/activity';
+import type { EventoAtividade } from '@/types/atividade';
 import { Send, User, LogIn } from 'lucide-react';
 
 // Componente de lista do feed de atividades.
 // Responsável apenas por renderizar; sem lógica de estado aqui (Separation of Concerns).
-export function ActivityList({ activities, formatTime }: { activities: ActivityEvent[]; formatTime: (d: Date) => string }) {
-  const getActivityIcon = (type: ActivityEvent['type']) => {
+export function ActivityList({ activities, formatTime }: { activities: EventoAtividade[]; formatTime: (d: Date) => string }) {
+  const getActivityIcon = (type: EventoAtividade['type']) => {
     switch (type) {
       case 'user_joined':
         return <User className="w-4 h-4 text-primary" />;
@@ -16,7 +16,7 @@ export function ActivityList({ activities, formatTime }: { activities: ActivityE
     }
   };
 
-  const getActivityText = (activity: ActivityEvent) => {
+  const getActivityText = (activity: EventoAtividade) => {
     switch (activity.type) {
       case 'user_joined':
         return `${activity.user} se juntou à plataforma`;

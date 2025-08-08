@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { useAuth } from "@/context/AuthContext";
+import { useAutenticacao } from "@/context/ContextoAutenticacao";
 import { Card } from "@/components/ui/card";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { toast } from "@/components/ui/use-toast";
 import { Link } from "react-router-dom";
-import { getUserByUsername, updateUserEmail } from "@/lib/userApi";
+import { obterUsuarioPorUsername, atualizarEmailUsuario } from "@/lib/usuarioApi";
 
-const UserProfile: React.FC = () => {
-  const { user, logout } = useAuth();
+const PerfilUsuario: React.FC = () => {
+  const { usuario, sair } = useAutenticacao();
 
-  const [profile, setProfile] = useState<{ id: string; username: string; email: string; role: number } | null>(null);
+  const [perfil, setPerfil] = useState<{ id: string; username: string; email: string; role: number } | null>(null);
   const [email, setEmail] = useState("");
-  const [saving, setSaving] = useState(false);
+  const [salvando, setSalvando] = useState(false);
 
   useEffect(() => {
     document.title = "Perfil do Usuário | Skill Learning";
@@ -29,34 +29,34 @@ const UserProfile: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    const uname = user?.username || user?.name;
+    const uname = usuario?.username || usuario?.name;
     if (!uname) return;
     (async () => {
       try {
-        const u = await getUserByUsername(uname);
-        setProfile(u);
+        const u = await obterUsuarioPorUsername(uname);
+        setPerfil(u);
         setEmail(u.email || "");
       } catch (e) {
         toast({ title: "Erro ao carregar usuário", description: e instanceof Error ? e.message : "Falha ao obter dados.", variant: "destructive" });
       }
     })();
-  }, [user?.username, user?.name]);
+  }, [usuario?.username, usuario?.name]);
 
-  const displayName = profile?.username || user?.username || user?.name || user?.email || "Usuário";
+  const nomeExibicao = perfil?.username || usuario?.username || usuario?.name || usuario?.email || "Usuário";
 
-  const handleSaveEmail = async () => {
-    if (!profile) return;
-    const newEmail = email.trim();
-    if (!newEmail) return;
-    setSaving(true);
+  const salvarEmail = async () => {
+    if (!perfil) return;
+    const novoEmail = email.trim();
+    if (!novoEmail) return;
+    setSalvando(true);
     try {
-      await updateUserEmail(profile.id, newEmail);
-      setProfile({ ...profile, email: newEmail });
+      await atualizarEmailUsuario(perfil.id, novoEmail);
+      setPerfil({ ...perfil, email: novoEmail });
       toast({ title: "Email atualizado", description: "Seu email foi alterado com sucesso." });
     } catch (e) {
       toast({ title: "Falha ao atualizar", description: e instanceof Error ? e.message : "Erro desconhecido.", variant: "destructive" });
     } finally {
-      setSaving(false);
+      setSalvando(false);
     }
   };
 
@@ -78,33 +78,33 @@ const UserProfile: React.FC = () => {
           <Card className="glass-card p-6 md:col-span-2">
             <div className="flex items-center gap-4">
               <Avatar className="h-16 w-16 ring-2 ring-white/30">
-                <AvatarFallback>{displayName.charAt(0).toUpperCase()}</AvatarFallback>
+                <AvatarFallback>{nomeExibicao.charAt(0).toUpperCase()}</AvatarFallback>
               </Avatar>
               <div>
-                <h2 className="text-xl font-semibold">{displayName}</h2>
-                {(profile?.email || user?.email) && <p className="text-muted-foreground">{profile?.email ?? user?.email}</p>}
-                {user?.role !== undefined && <p className="text-xs mt-1">Permissão: {user.role}</p>}
+                <h2 className="text-xl font-semibold">{nomeExibicao}</h2>
+                {(perfil?.email || usuario?.email) && <p className="text-muted-foreground">{perfil?.email ?? usuario?.email}</p>}
+                {usuario?.role !== undefined && <p className="text-xs mt-1">Permissão: {usuario.role}</p>}
               </div>
               <div className="ml-auto flex items-center gap-2">
                 <Button asChild variant="outline" className="glass-card border-glass-border hover:border-primary">
                   <Link to="/">Voltar</Link>
                 </Button>
-                <Button onClick={logout} className="glass-button">Sair</Button>
+                <Button onClick={sair} className="glass-button">Sair</Button>
               </div>
             </div>
 
             <div className="mt-6 grid sm:grid-cols-3 gap-4">
               <Card className="glass-card p-4">
                 <p className="text-xs text-muted-foreground">ID do usuário</p>
-                <p className="font-medium break-all">{profile?.id ?? user?.id ?? "—"}</p>
+                <p className="font-medium break-all">{perfil?.id ?? usuario?.id ?? "—"}</p>
               </Card>
               <Card className="glass-card p-4">
                 <p className="text-xs text-muted-foreground">Nome</p>
-                <p className="font-medium">{user?.name ?? "—"}</p>
+                <p className="font-medium">{usuario?.name ?? "—"}</p>
               </Card>
               <Card className="glass-card p-4">
                 <p className="text-xs text-muted-foreground">Username</p>
-                <p className="font-medium">{profile?.username ?? user?.username ?? "—"}</p>
+                <p className="font-medium">{perfil?.username ?? usuario?.username ?? "—"}</p>
               </Card>
             </div>
           </Card>
@@ -113,8 +113,8 @@ const UserProfile: React.FC = () => {
             <h3 className="font-semibold mb-3">Atualizar email</h3>
             <div className="space-y-3">
               <Input type="email" placeholder="novo@email.com" value={email} onChange={(e) => setEmail(e.target.value)} />
-              <Button onClick={handleSaveEmail} disabled={saving || !profile} className="glass-button">
-                {saving ? "Salvando..." : "Salvar"}
+              <Button onClick={salvarEmail} disabled={salvando || !perfil} className="glass-button">
+                {salvando ? "Salvando..." : "Salvar"}
               </Button>
             </div>
           </Card>
@@ -132,4 +132,4 @@ const UserProfile: React.FC = () => {
   );
 };
 
-export default UserProfile;
+export default PerfilUsuario;

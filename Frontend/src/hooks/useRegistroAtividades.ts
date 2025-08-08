@@ -1,20 +1,20 @@
 import { useEffect, useMemo, useState, useCallback } from 'react';
-import type { ActivityEvent } from '@/types/activity';
+import type { EventoAtividade } from '@/types/atividade';
 
 // Chave usada no localStorage para persistir o feed
 const STORAGE_KEY = 'signalr.activities';
 
 // Hook responsável por centralizar o estado e a persistência do feed de atividades.
 // Mantém o histórico entre navegações e facilita testes/reutilização.
-export function useActivityLog() {
-  const [activities, setActivities] = useState<ActivityEvent[]>([]);
+export function useRegistroAtividades() {
+  const [activities, setActivities] = useState<EventoAtividade[]>([]);
 
   // Hidrata do localStorage apenas uma vez ao montar
   useEffect(() => {
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
       if (raw) {
-        const parsed = JSON.parse(raw) as (Omit<ActivityEvent, 'timestamp'> & { timestamp: string })[];
+        const parsed = JSON.parse(raw) as (Omit<EventoAtividade, 'timestamp'> & { timestamp: string })[];
         setActivities(parsed.map(a => ({ ...a, timestamp: new Date(a.timestamp) })));
       } else {
         // Seed inicial (opcional) para demonstrar a UI ao primeiro acesso
@@ -40,8 +40,8 @@ export function useActivityLog() {
   }, [activities]);
 
   // Adiciona uma atividade no topo e limita a 10 itens para manter a UI leve
-  const addActivity = useCallback((e: Omit<ActivityEvent, 'id'> & { id?: string }) => {
-    const withId: ActivityEvent = {
+  const addActivity = useCallback((e: Omit<EventoAtividade, 'id'> & { id?: string }) => {
+    const withId: EventoAtividade = {
       id: e.id ?? Date.now().toString(),
       type: e.type,
       user: e.user,
@@ -55,9 +55,9 @@ export function useActivityLog() {
   // - Faz deduplicação por id
   // - Ordena por timestamp desc
   // - Limita a 10 itens para manter a UI performática
-  const addActivities = useCallback((batch: ActivityEvent[]) => {
+  const addActivities = useCallback((batch: EventoAtividade[]) => {
     setActivities(prev => {
-      const byId = new Map<string, ActivityEvent>();
+      const byId = new Map<string, EventoAtividade>();
       // Indexa existentes
       for (const a of prev) byId.set(a.id, a);
       // Insere/atualiza novos
