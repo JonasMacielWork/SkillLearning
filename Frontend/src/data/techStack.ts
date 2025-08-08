@@ -1,0 +1,16 @@
+export const techStack: string[] = [
+  ".NET 9",
+  "C#",
+  "Entity Framework",
+  "SignalR",
+  "PostgreSQL",
+  "Redis",
+  "Apache Kafka",
+  "Docker",
+  "Azure",
+  "React",
+  "TypeScript",
+  "Tailwind CSS",
+  "AutoMapper",
+  "FluentValidation",
+];
