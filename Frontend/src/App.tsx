@@ -7,11 +7,18 @@ import Inicial from "./pages/Inicial";
 import NotFound from "./pages/NotFound";
 import Entrar from "./pages/Auth/Entrar";
 import Cadastrar from "./pages/Auth/Cadastrar";
-import { ProvedorAutenticacao } from "@/context/ContextoAutenticacao";
 import PerfilUsuario from "./pages/PerfilUsuario";
+import { ProvedorAutenticacao } from "@/context/ContextoAutenticacao";
 import RotaProtegida from "@/components/auth/RotaProtegida";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 5 * 60 * 1000, // 5 minutos
+      retry: 1
+    }
+  }
+});
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
@@ -25,7 +32,6 @@ const App = () => (
             <Route path="/login" element={<Entrar />} />
             <Route path="/register" element={<Cadastrar />} />
             <Route path="/me" element={<RotaProtegida><PerfilUsuario /></RotaProtegida>} />
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>

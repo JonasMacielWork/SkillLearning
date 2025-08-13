@@ -97,7 +97,24 @@ namespace SkillLearning.Api.Extensions
 
             services.AddAuthorization();
 
-            // 8. Swagger
+            // 8. CORS Configuration
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowFrontend", policy =>
+                {
+                    policy.WithOrigins(
+                        "http://localhost:8080",
+                        "https://localhost:8080",
+                        "http://127.0.0.1:8080",
+                        "https://127.0.0.1:8080"
+                    )
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowCredentials(); // Necessário para SignalR
+                });
+            });
+
+            // 9. Swagger (renumerado)
             services.AddSwaggerGen(opt =>
             {
                 opt.SwaggerDoc("v1", new OpenApiInfo
