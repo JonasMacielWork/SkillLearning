@@ -68,6 +68,7 @@ app.UseSwaggerUI(ModernStyle.Futuristic);
 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "SkillLearning API v1"));
 
 app.UseHttpsRedirection();
+app.UseCors("AllowFrontend");
 app.UseRateLimiter();
 app.UseAuthentication();
 app.UseAuthorization();

@@ -1,0 +1,52 @@
+/* Toon Glass add-on styles: cartoon-like outlines, sticker shadows, subtle highlights */
+
+/* Cards / panels */
+.toon-glass {
+  border-width: 1.5px;
+  border-color: hsl(var(--ink) / 0.35);
+  box-shadow: 0 3px 0 hsl(var(--ink) / 0.20);
+}
+.dark .toon-glass {
+  border-color: hsl(var(--ink) / 0.55);
+  box-shadow: 0 3px 0 hsl(var(--ink) / 0.28);
+}
+.toon-glass::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(180deg, hsl(var(--brand-foreground) / 0.06), transparent 40%);
+  pointer-events: none;
+}
+
+/* Buttons */
+.btn-hero.toon, .btn-glass.toon {
+  border-width: 1.5px;
+  border-color: hsl(var(--ink) / 0.35);
+  box-shadow: 0 3px 0 hsl(var(--ink) / 0.20);
+}
+.dark .btn-hero.toon, .dark .btn-glass.toon {
+  border-color: hsl(var(--ink) / 0.55);
+  box-shadow: 0 3px 0 hsl(var(--ink) / 0.28);
+}
+.btn-hero.toon:active, .btn-glass.toon:active {
+  transform: translateY(1px);
+  box-shadow: 0 2px 0 hsl(var(--ink) / 0.22);
+}
+
+/* Hover micro-bounce */
+.hover-bounce { transition: transform 180ms ease; }
+.hover-bounce:hover { transform: translateY(-2px); }
+
+/* Switch (toon) */
+.toon-switch { border-width: 2px; border-color: hsl(var(--ink) / 0.60); }
+.dark .toon-switch { border-color: hsl(var(--ink) / 0.70); }
+.toon-switch[data-state="checked"] { box-shadow: 0 2px 0 hsl(var(--brand) / 0.16); }
+.toon-switch[data-state="unchecked"] { box-shadow: 0 2px 0 hsl(var(--ink) / 0.10); }
+
+/* Table stronger lines in light */
+.toon-table thead tr, .toon-table tbody tr { border-color: hsl(var(--foreground) / 0.28) !important; border-bottom-width: 2px; }
+.dark .toon-table thead tr, .dark .toon-table tbody tr { border-color: hsl(var(--foreground) / 0.18) !important; }
+
+/* Icons */
+.toon-icon svg { stroke-width: 2.5; }
