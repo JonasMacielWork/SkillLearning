@@ -21,6 +21,7 @@ import {
 import LiquidBackground from "@/components/LiquidBackground";
 import InteractiveGlass from "@/components/InteractiveGlass";
 import { Sparkles, Layers, Shield, Gauge, ArrowRight, BookOpen, Check, Pencil, Trash2, Plus, Menu } from "lucide-react";
+import RealTimeActivityPanel from "@/components/RealTimeActivityPanel";
 
 const Index = () => {
   const location = useLocation();
@@ -367,6 +368,34 @@ const Index = () => {
                 </ul>
                 <Button variant="glass" className="toon w-full">Fale conosco</Button>
               </InteractiveGlass>
+            </div>
+          </div>
+        </section>
+
+        {/* Real-time activity section */}
+        <section className="container py-16">
+          <div className="grid lg:grid-cols-3 gap-8 items-start">
+            <div className="lg:col-span-2">
+              <InteractiveGlass className="glass-panel toon-glass p-8 rounded-xl">
+                <h2 className="text-2xl font-bold mb-4">Demonstração SignalR</h2>
+                <p className="text-muted-foreground mb-6">
+                  Este painel mostra atividades em tempo real usando SignalR.
+                  Quando novos usuários se registram ou fazem login no sistema,
+                  você verá as notificações aparecerem instantaneamente.
+                </p>
+                <div className="flex gap-4">
+                  <Button variant="hero" size="sm">
+                    Registrar Usuário de Teste
+                  </Button>
+                  <Button variant="glass" size="sm">
+                    Simular Login
+                  </Button>
+                </div>
+              </InteractiveGlass>
+            </div>
+
+            <div className="lg:col-span-1">
+              <RealTimeActivityPanel />
             </div>
           </div>
         </section>
