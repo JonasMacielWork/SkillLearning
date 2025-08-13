@@ -97,7 +97,22 @@ namespace SkillLearning.Api.Extensions
 
             services.AddAuthorization();
 
-            // 8. Swagger
+            // 8. CORS Configuration
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowFrontend", policy =>
+                {
+                    policy.WithOrigins(
+                        "http://localhost:8080",
+                        "https://localhost:8080"
+                    )
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowCredentials();
+                });
+            });
+
+            // 9. Swagger (renumerado)
             services.AddSwaggerGen(opt =>
             {
                 opt.SwaggerDoc("v1", new OpenApiInfo

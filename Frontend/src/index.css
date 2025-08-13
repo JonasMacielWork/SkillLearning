@@ -1,80 +1,43 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* SkillLearning Design System - Liquid Glass Theme
-All colors MUST be HSL for consistency.
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
 */
 
 @layer base {
   :root {
-    /* Glass Background System */
-    --background: 240 23% 9%;
-    --background-secondary: 240 21% 12%;
-    --foreground: 0 0% 95%;
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
 
-    /* Liquid Glass Cards */
-    --card: 240 15% 11%;
-    --card-foreground: 0 0% 95%;
-    --glass: 240 15% 15%;
-    --glass-border: 240 20% 25%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
 
-    /* Popover */
-    --popover: 240 15% 11%;
-    --popover-foreground: 0 0% 95%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
 
-    /* Primary Brand Colors - Electric Blue */
-    --primary: 217 91% 60%;
-    --primary-foreground: 0 0% 100%;
-    --primary-glow: 217 91% 70%;
-    --primary-dark: 217 91% 45%;
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 98%;
 
-    /* Secondary - Purple Gradient */
-    --secondary: 280 100% 70%;
-    --secondary-foreground: 0 0% 100%;
-    --secondary-glow: 280 100% 80%;
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
 
-    /* Accent - Cyan */
-    --accent: 180 100% 60%;
-    --accent-foreground: 240 23% 9%;
-    --accent-glow: 180 100% 70%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
 
-    /* Muted Elements */
-    --muted: 240 15% 20%;
-    --muted-foreground: 0 0% 65%;
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
 
-    /* Destructive */
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 100%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
 
-    /* Borders & Inputs */
-    --border: 240 20% 25%;
-    --input: 240 15% 15%;
-    --ring: 217 91% 60%;
+    --border: 220 16% 76%;
+    --input: 220 16% 76%;
+    --ring: 222.2 84% 4.9%;
+    --ink: 0 0% 0%;
 
-    /* Glass Effects */
-    --glass-bg: 240 15% 15% / 0.7;
-    --glass-border-color: 240 20% 25% / 0.3;
-    --backdrop-blur: blur(20px);
-    
-    /* Gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(217 91% 60%), hsl(280 100% 70%));
-    --gradient-secondary: linear-gradient(135deg, hsl(280 100% 70%), hsl(180 100% 60%));
-    --gradient-glass: linear-gradient(135deg, hsl(240 15% 15% / 0.8), hsl(240 15% 20% / 0.6));
-    --gradient-glow: radial-gradient(circle at 50% 50%, hsl(217 91% 60% / 0.3), transparent 70%);
-    
-    /* Shadows */
-    --shadow-glow: 0 8px 32px hsl(217 91% 60% / 0.25);
-    --shadow-glass: 0 8px 32px hsl(240 15% 5% / 0.3);
-    --shadow-elevation: 0 20px 40px hsl(240 15% 5% / 0.4);
-
-    /* Animation Timings */
-    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    --transition-bounce: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-
-    --radius: 1rem;
+    --radius: 0.5rem;
 
     --sidebar-background: 0 0% 98%;
 
@@ -93,14 +56,44 @@ All colors MUST be HSL for consistency.
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
 
-  /* Light mode (optional - mainly dark focused) */
-  .light {
-    --background: 0 0% 98%;
-    --background-secondary: 0 0% 95%;
-    --foreground: 240 23% 9%;
-    --glass: 0 0% 100% / 0.8;
-    --glass-border: 240 20% 85%;
-    --muted-foreground: 0 0% 35%;
+  .dark {
+    --background: 252 24% 8%;
+    --foreground: 220 20% 96%;
+
+    --card: 252 22% 12%;
+    --card-foreground: 220 20% 96%;
+
+    --popover: 252 22% 12%;
+    --popover-foreground: 220 20% 96%;
+
+    --primary: 270 85% 65%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 258 28% 18%;
+    --secondary-foreground: 220 20% 96%;
+
+    --muted: 252 16% 18%;
+    --muted-foreground: 220 12% 70%;
+
+    --accent: 258 28% 18%;
+    --accent-foreground: 220 20% 96%;
+
+    --destructive: 0 72% 50%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 257 22% 24%;
+    --input: 257 22% 24%;
+    --ring: 270 80% 60%;
+    --ink: 0 0% 0%;
+
+    --sidebar-background: 252 24% 8%;
+    --sidebar-foreground: 220 20% 96%;
+    --sidebar-primary: 270 85% 65%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 258 28% 18%;
+    --sidebar-accent-foreground: 220 20% 96%;
+    --sidebar-border: 257 22% 24%;
+    --sidebar-ring: 270 80% 60%;
   }
 }
 
@@ -110,128 +103,6 @@ All colors MUST be HSL for consistency.
   }
 
   body {
-    @apply bg-background text-foreground font-inter;
-    background: linear-gradient(135deg, hsl(var(--background)), hsl(var(--background-secondary)));
-    min-height: 100vh;
-    overflow-x: hidden;
-  }
-
-  html {
-    scroll-behavior: smooth;
-  }
-}
-
-@layer components {
-  /* Liquid Glass Components */
-  .glass-card {
-    @apply relative rounded-2xl border border-glass-border/30;
-    background: hsl(var(--glass-bg));
-    backdrop-filter: var(--backdrop-blur);
-    box-shadow: var(--shadow-glass);
-    transition: var(--transition-smooth);
-  }
-
-  .glass-card:hover {
-    @apply border-primary/40;
-    box-shadow: var(--shadow-elevation), var(--shadow-glow);
-    transform: translateY(-2px);
-  }
-
-  .glass-button {
-    @apply relative px-6 py-3 rounded-xl font-medium transition-all duration-300;
-    background: var(--gradient-primary);
-    box-shadow: var(--shadow-glow);
-  }
-
-  .glass-button:hover {
-    transform: translateY(-2px) scale(1.02);
-    box-shadow: var(--shadow-elevation), 0 12px 40px hsl(var(--primary) / 0.4);
-  }
-
-  .glass-button:active {
-    transform: translateY(0) scale(0.98);
-  }
-
-  /* Floating Animation */
-  .floating {
-    animation: float 6s ease-in-out infinite;
-  }
-
-  @keyframes float {
-    0%, 100% { transform: translateY(0px) rotate(0deg); }
-    33% { transform: translateY(-10px) rotate(1deg); }
-    66% { transform: translateY(-5px) rotate(-1deg); }
-  }
-
-  /* Glow Effects */
-  .glow-primary {
-    box-shadow: 0 0 40px hsl(var(--primary) / 0.3);
-  }
-
-  .glow-secondary {
-    box-shadow: 0 0 40px hsl(var(--secondary) / 0.3);
-  }
-
-  .glow-accent {
-    box-shadow: 0 0 40px hsl(var(--accent) / 0.3);
-  }
-
-  /* Animated Gradient Text */
-  .gradient-text {
-    background: var(--gradient-primary);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-size: 200% auto;
-    animation: gradient-shift 3s ease-in-out infinite;
-  }
-
-  @keyframes gradient-shift {
-    0%, 100% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-  }
-
-  /* Liquid Loading Animation */
-  .liquid-loader {
-    @apply relative w-12 h-12 rounded-full;
-    background: var(--gradient-primary);
-    animation: liquid-pulse 2s ease-in-out infinite;
-  }
-
-  @keyframes liquid-pulse {
-    0%, 100% { 
-      transform: scale(1);
-      opacity: 1;
-    }
-    50% { 
-      transform: scale(1.2);
-      opacity: 0.7;
-    }
-  }
-
-  /* Interactive Hover Effects */
-  .hover-lift {
-    transition: var(--transition-smooth);
-  }
-
-  .hover-lift:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-elevation);
-  }
-
-  /* Status Indicators */
-  .status-online {
-    @apply w-3 h-3 rounded-full bg-accent;
-    box-shadow: 0 0 10px hsl(var(--accent) / 0.6);
-    animation: pulse-glow 2s infinite;
-  }
-
-  @keyframes pulse-glow {
-    0%, 100% { 
-      box-shadow: 0 0 10px hsl(var(--accent) / 0.6);
-    }
-    50% { 
-      box-shadow: 0 0 20px hsl(var(--accent) / 0.9);
-    }
+    @apply bg-background text-foreground;
   }
 }

@@ -1,0 +1,195 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+/* Liquid Glass design additions: brand tokens, gradients, and component utilities */
+@layer base {
+  :root {
+    --brand: 270 70% 58%;
+    --brand-2: 270 72% 72%;
+    --brand-foreground: 210 40% 98%;
+    --gradient-primary: linear-gradient(135deg, hsl(var(--brand)), hsl(var(--brand-2)));
+  }
+  .dark {
+    --brand: 270 72% 62%;
+    --brand-2: 270 78% 70%;
+    --brand-foreground: 222.2 47.4% 11.2%;
+  }
+}
+
+@layer components {
+  .glass-panel {
+    /* Light theme default */
+    background: linear-gradient(180deg, hsl(var(--foreground) / 0.04), hsl(var(--foreground) / 0.02));
+    border: 1px solid hsl(var(--foreground) / 0.14);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    box-shadow:
+      inset 0 1px 0 hsl(var(--foreground) / 0.06),
+      inset 0 -1px 0 hsl(var(--foreground) / 0.03),
+      0 8px 24px -12px hsl(var(--foreground) / 0.10);
+    border-radius: var(--radius);
+  }
+  .dark .glass-panel {
+    background:
+      linear-gradient(180deg, hsl(var(--background) / 0.34), hsl(var(--background) / 0.16)),
+      radial-gradient(1200px circle at 10% 0%, hsl(var(--foreground) / 0.07), transparent 40%),
+      radial-gradient(1200px circle at 90% 100%, hsl(var(--foreground) / 0.05), transparent 40%);
+    border: 1px solid hsl(var(--foreground) / 0.12);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    box-shadow:
+      inset 0 1px 0 hsl(var(--foreground) / 0.12),
+      inset 0 -1px 0 hsl(var(--foreground) / 0.05),
+      0 8px 24px -16px hsl(var(--foreground) / 0.10);
+  }
+
+  .btn-glass {
+    /* Light theme default */
+    background: linear-gradient(
+      180deg,
+      hsl(var(--foreground) / 0.06),
+      hsl(var(--foreground) / 0.03)
+    );
+    color: hsl(var(--foreground));
+    border: 1px solid hsl(var(--foreground) / 0.16);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    box-shadow: inset 0 1px 0 hsl(var(--foreground) / 0.08), inset 0 -1px 0 hsl(var(--foreground) / 0.04), 0 4px 10px -8px hsl(var(--foreground) / 0.10);
+    transition: all 0.25s ease;
+  }
+  .btn-glass:hover {
+    background: linear-gradient(
+      180deg,
+      hsl(var(--foreground) / 0.08),
+      hsl(var(--foreground) / 0.05)
+    );
+    box-shadow: 0 6px 12px -10px hsl(var(--foreground) / 0.12);
+  }
+
+  .dark .btn-glass {
+    background: linear-gradient(
+      180deg,
+      hsl(var(--card) / 0.30),
+      hsl(var(--card) / 0.14)
+    );
+    border: 1px solid hsl(var(--foreground) / 0.10);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    box-shadow: inset 0 1px 0 hsl(var(--foreground) / 0.10), inset 0 -1px 0 hsl(var(--foreground) / 0.06), 0 6px 18px -14px hsl(var(--foreground) / 0.10);
+  }
+  .dark .btn-glass:hover {
+    background: linear-gradient(
+      180deg,
+      hsl(var(--card) / 0.42),
+      hsl(var(--card) / 0.20)
+    );
+    box-shadow: 0 10px 22px -16px hsl(var(--foreground) / 0.12);
+  }
+
+  .btn-hero {
+    background-image: var(--gradient-primary);
+    color: hsl(var(--brand-foreground));
+    border: 1px solid hsl(var(--foreground) / 0.16);
+    box-shadow: 0 6px 14px -12px hsl(var(--foreground) / 0.10);
+    background-size: 120% 120%;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background-position 0.4s ease;
+  }
+  .btn-hero:hover {
+    transform: translateY(-0.5px);
+    background-position: 30% 70%;
+    box-shadow: 0 8px 16px -12px hsl(var(--foreground) / 0.12);
+  }
+
+  .liquid-bg {
+    background:
+      radial-gradient(700px circle at 22% 36%, hsl(var(--brand) / 0.06), transparent 45%),
+      radial-gradient(900px circle at 80% 20%, hsl(var(--brand-2) / 0.05), transparent 50%),
+      repeating-linear-gradient(135deg, hsl(var(--foreground) / 0.02) 0px, transparent 2px, transparent 10px);
+    background-size: auto, auto, 480px 480px;
+    animation: liquid-drift 16s ease-in-out infinite;
+    filter: blur(4px);
+    pointer-events: none;
+  }
+
+  .glass-interactive {
+    position: relative;
+    isolation: isolate;
+    transition: transform 0.35s ease-out;
+    will-change: transform;
+  }
+  .glass-interactive::before {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    background: radial-gradient(220px circle at var(--mx, -400px) var(--my, -400px), hsl(var(--brand) / 0.06), transparent 45%);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .glass-interactive > * { position: relative; z-index: 1; }
+
+  .btn-hero { position: relative; overflow: hidden; }
+  .btn-hero::after {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    background: radial-gradient(140px circle at var(--mx, -200px) var(--my, -200px), hsl(var(--brand-foreground) / 0.12), transparent 55%);
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+    opacity: 0.25;
+  }
+
+  /* Animações para o painel de atividades */
+  @keyframes slideInFromTop {
+    0% {
+      opacity: 0;
+      transform: translateY(-20px) scale(0.95);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+  
+  /* Scrollbar customizada */
+  .scrollbar-thin {
+    scrollbar-width: thin;
+  }
+  
+  .scrollbar-thumb-muted {
+    scrollbar-color: hsl(var(--muted)) transparent;
+  }
+  
+  .scrollbar-track-transparent {
+    scrollbar-track-color: transparent;
+  }
+  
+  /* Webkit scrollbar para navegadores baseados em Chromium */
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 4px;
+  }
+  
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background: hsl(var(--muted));
+    border-radius: 2px;
+  }
+  
+  .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--muted-foreground));
+  }
+}
+
+@keyframes liquid-drift {
+  0% { background-position: 0 0, 0 0, 0 0; }
+  50% { background-position: 0 0, 0 0, 240px 120px; }
+  100% { background-position: 0 0, 0 0, 0 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-hero, .btn-glass { transition: none; }
+  .liquid-bg { animation: none; }
+}
