@@ -1,7 +1,7 @@
 // Contexto de Autenticação (JWT): centraliza login/registro/logout, persiste tokens e hidrata o usuário; expõe useAutenticacao para rotas protegidas.
 import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { clearTokens, getTokens, isExpired, login as apiLogin, register as apiRegister, setTokens, parseJwt } from "@/lib/auth";
-import { toast } from "@/components/ui/use-toast";
+import { toast } from "@/hooks/use-toast";
 
 export type UsuarioAutenticado = { id?: string; email?: string; name?: string; username?: string; role?: number } | null;
 
