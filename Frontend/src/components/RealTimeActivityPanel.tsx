@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { HubConnection, HubConnectionBuilder, LogLevel } from '@microsoft/signalr';
-import { Users, UserPlus, LogIn, Wifi, WifiOff, Activity } from 'lucide-react';
+import { Users, UserPlus, LogIn, Wifi, WifiOff, Activity, Calendar, Clock } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import InteractiveGlass from './InteractiveGlass';
 
@@ -15,7 +15,8 @@ const RealTimeActivityPanel: React.FC = () => {
   const [connection, setConnection] = useState<HubConnection | null>(null);
   const [isConnected, setIsConnected] = useState(false);
   const [activities, setActivities] = useState<ActivityNotification[]>([]);
-  const [onlineUsers, setOnlineUsers] = useState(0);
+  const [registersCount, setRegistersCount] = useState(0);
+  const [loginsCount, setLoginsCount] = useState(0);
   const activitiesRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -40,9 +41,6 @@ const RealTimeActivityPanel: React.FC = () => {
         .then(() => {
           console.log('SignalR Connected!');
           setIsConnected(true);
-          
-          // Simular contagem de usuários online
-          setOnlineUsers(Math.floor(Math.random() * 50) + 10);
         })
         .catch(err => {
           console.error('SignalR Connection Error: ', err);
@@ -67,9 +65,9 @@ const RealTimeActivityPanel: React.FC = () => {
         };
         
         setActivities(prev => [newActivity, ...prev.slice(0, 9)]); // Manter apenas 10 atividades
-        setOnlineUsers(prev => prev + 1);
+        setRegistersCount(prev => prev + 1);
       });
-
+      
       connection.on('UserLoggedIn', (username: string) => {
         const newActivity: ActivityNotification = {
           id: Date.now().toString(),
@@ -79,6 +77,7 @@ const RealTimeActivityPanel: React.FC = () => {
         };
         
         setActivities(prev => [newActivity, ...prev.slice(0, 9)]);
+        setLoginsCount(prev => prev + 1);
       });
     }
   }, [connection]);
@@ -146,22 +145,22 @@ const RealTimeActivityPanel: React.FC = () => {
           </div>
         </div>
 
-        {/* Stats */}
+        {/* Stats - Contadores separados para Registros e Logins */}
         <div className="grid grid-cols-2 gap-4 mb-6">
           <div className="glass-panel p-3 rounded-lg text-center">
             <div className="flex items-center justify-center gap-2 mb-1">
-              <Users className="h-4 w-4 text-brand" />
-              <span className="text-2xl font-bold text-brand">{onlineUsers}</span>
+              <UserPlus className="h-4 w-4 text-green-400" />
+              <span className="text-2xl font-bold text-green-400">{registersCount}</span>
             </div>
-            <p className="text-xs text-muted-foreground">Usuários Online</p>
+            <p className="text-xs text-muted-foreground">Registros</p>
           </div>
           
           <div className="glass-panel p-3 rounded-lg text-center">
             <div className="flex items-center justify-center gap-2 mb-1">
-              <Activity className="h-4 w-4 text-brand-2" />
-              <span className="text-2xl font-bold text-brand-2">{activities.length}</span>
+              <LogIn className="h-4 w-4 text-blue-400" />
+              <span className="text-2xl font-bold text-blue-400">{loginsCount}</span>
             </div>
-            <p className="text-xs text-muted-foreground">Atividades</p>
+            <p className="text-xs text-muted-foreground">Logins</p>
           </div>
         </div>
 
